@@ -1,0 +1,8 @@
+
+[lfs]
+  {% if forgejo_lfs.storage_type | default('') | string | length > 0 %}
+STORAGE_TYPE = local
+  {% endif %}
+  {% if forgejo_lfs.path | default('') | string | length > 0 %}
+PATH = data/lfs
+  {% endif %}

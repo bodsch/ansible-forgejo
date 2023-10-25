@@ -1,0 +1,38 @@
+---
+
+galaxy_info:
+  role_name: forgejo
+
+  author: Bodo Schulz
+  description: installs, configures forgejo
+
+  license: Apache
+  min_ansible_version: "2.12"
+
+  platforms:
+    - name: ArchLinux
+    - name: Debian
+      versions:
+        # 9
+        - etch
+        # 10
+        - buster
+        - bullseye
+    - name: Ubuntu
+      versions:
+        # 18.04
+        - bionic
+        # 20.04
+        - focal
+    - name: EL
+      versions:
+        - "7"
+        - "8"
+
+  galaxy_tags:
+    - git
+    - scm
+
+dependencies: []
+
+...
