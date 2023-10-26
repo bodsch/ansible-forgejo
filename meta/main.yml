@@ -7,31 +7,35 @@ galaxy_info:
   description: installs, configures forgejo
 
   license: Apache
-  min_ansible_version: "2.12"
+  min_ansible_version: "2.9"
 
   platforms:
     - name: ArchLinux
     - name: Debian
       versions:
-        # 9
-        - etch
         # 10
         - buster
+        # 11
         - bullseye
+        # 12
+        - bookworm
     - name: Ubuntu
       versions:
-        # 18.04
-        - bionic
-        # 20.04
+        # 20.04 LTS (Focal Fossa)
         - focal
-    - name: EL
-      versions:
-        - "7"
-        - "8"
+        # 22.04 LTS (Jammy Jellyfish)
+        - jammy
+        # 22.10 (Kinetic Kudu)
+        # - kinetic
+        # 23.04 (Lunar Lobster)
+        # - lunar
 
   galaxy_tags:
     - git
     - scm
+    - development
+    - sourcecontrol
+    - gitserver
 
 dependencies: []
 

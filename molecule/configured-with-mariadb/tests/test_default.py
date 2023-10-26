@@ -133,7 +133,7 @@ def test_open_port(host, get_vars):
 
         listen_address = f"{_address}:{_port}"
     else:
-        listen_address = "0.0.0.0:3000"
+        listen_address = "127.0.0.1:3000"
 
     service = host.socket(f"tcp://{listen_address}")
     assert service.is_listening
