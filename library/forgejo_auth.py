@@ -88,12 +88,15 @@ class GiteaAuth(object):
             # self.module.log(f" old_checksum  : {old_checksum}")
 
             if changed:
-                if not self.auth_exists(self.name):
+
+                auth_exists, auth_id = self.auth_exists(self.name)
+
+                if not auth_exists:
                     self.add_auth()
                     changed = True
                     msg = f"LDAP Auth {self.name} successfully created."
                 else:
-                    self.update_auth()
+                    self.update_auth(auth_id)
                     changed = True
                     msg = f"LDAP Auth {self.name} successfully updated."
 
@@ -128,7 +131,7 @@ class GiteaAuth(object):
             "--config", self.config,
         ]
 
-        result = False
+        result = (False, 0)
         self.module.log(msg=f"  args_list : '{args_list}'")
         rc, out, err = self._exec(args_list)
 
@@ -147,9 +150,10 @@ class GiteaAuth(object):
                 # self.module.log(msg=f"  found_match : '{found_match}'")
                 if found_match and len(found_match) > 0:
                     found_match = found_match[0]
+                    auth_id = found_match.group('ID')
                     self.module.log(msg=f"  found authentication : {found_match.group('name')} with type {found_match.group('type').strip()}")
 
-                    result = True
+                    result = (True, auth_id)
 
         return result
 
@@ -171,7 +175,61 @@ class GiteaAuth(object):
             self.forgejo_bin,
             "admin",
             "auth",
-            "add-ldap",
+            "add-ldap"
+        ]
+
+        args_list += self.__auth_params()
+
+        self.module.log(msg=f"  args_list : '{args_list}'")
+
+        rc, out, err = self._exec(args_list)
+
+        if rc == 0:
+            return dict(
+                failed=False,
+                changed=True,
+                msg=f"LDAP Auth {self.name} successful created."
+            )
+        else:
+            return dict(
+                failed=True,
+                msg=err
+            )
+
+    # TODO
+    def update_auth(self, auth_id):
+        """
+        """
+        args_list = [
+            self.forgejo_bin,
+            "admin",
+            "auth",
+            "update-ldap",
+            "--id",
+            auth_id
+        ]
+
+        args_list += self.__auth_params()
+
+        self.module.log(msg=f"  args_list : '{args_list}'")
+
+        rc, out, err = self._exec(args_list)
+
+        if rc == 0:
+            return dict(
+                failed=False,
+                changed=True,
+                msg=f"LDAP Auth {self.name} successful updated."
+            )
+        else:
+            return dict(
+                failed=True,
+                msg=err
+            )
+
+    def __auth_params(self):
+
+        args_list = [
             "--work-path", self.working_dir,
             "--config", self.config,
             "--name", self.name,
@@ -238,32 +296,12 @@ class GiteaAuth(object):
                 "--not-active"
             ]
 
-        if not self.skip_tls_verify:
+        if self.skip_tls_verify:
             args_list += [
                 "--skip-tls-verify"
             ]
 
-        self.module.log(msg=f"  args_list : '{args_list}'")
-
-        rc, out, err = self._exec(args_list)
-
-        if rc == 0:
-            return dict(
-                failed=False,
-                changed=True,
-                msg=f"LDAP Auth {self.name} successful created."
-            )
-        else:
-            return dict(
-                failed=True,
-                msg=err
-            )
-
-    # TODO
-    def update_auth(self):
-        """
-        """
-        pass
+        return args_list
 
     def __write_config(self, file_name, data):
         """
