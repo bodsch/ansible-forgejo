@@ -4,71 +4,58 @@ ENABLED = {{ forgejo_mailer.enabled | default('false') | bodsch.core.config_bool
   {% if forgejo_mailer.send_buffer_len | default('') | string | length > 0 %}
 SEND_BUFFER_LEN = {{ forgejo_mailer.send_buffer_len }}
   {% endif %}
-;;
-;; Prefix displayed before subject in mail
-;SUBJECT_PREFIX =
-;;
-;; Mail server protocol. One of "smtp", "smtps", "smtp+starttls", "smtp+unix", "sendmail", "dummy".
-;; - sendmail: use the operating system's `sendmail` command instead of SMTP. This is common on Linux systems.
-;; - dummy: send email messages to the log as a testing phase.
-;; If your provider does not explicitly say which protocol it uses but does provide a port,
-;; you can set SMTP_PORT instead and this will be inferred.
-;; (Before 1.18, see the notice, this was controlled via MAILER_TYPE and IS_TLS_ENABLED.)
-;PROTOCOL =
-;;
-;; Mail server address, e.g. smtp.gmail.com.
-;; For smtp+unix, this should be a path to a unix socket instead.
-;; (Before 1.18, see the notice, this was combined with SMTP_PORT as HOST.)
-;SMTP_ADDR =
-;;
-;; Mail server port. Common ports are:
-;;   25:  insecure SMTP
-;;   465: SMTP Secure
-;;   587: StartTLS
-;; If no protocol is specified, it will be inferred by this setting.
-;; (Before 1.18, this was combined with SMTP_ADDR as HOST.)
-;SMTP_PORT =
-;;
-;; Enable HELO operation. Defaults to true.
-;ENABLE_HELO = true
-;;
-;; Custom hostname for HELO operation.
-;; If no value is provided, one is retrieved from system.
-;HELO_HOSTNAME =
-;;
-;; If set to `true`, completely ignores server certificate validation errors.
-;; This option is unsafe. Consider adding the certificate to the system trust store instead.
-;FORCE_TRUST_SERVER_CERT = false
-;;
-;; Use client certificate in connection.
-;USE_CLIENT_CERT = false
-;CLIENT_CERT_FILE = custom/mailer/cert.pem
-;CLIENT_KEY_FILE = custom/mailer/key.pem
-;;
-;; Mail from address, RFC 5322. This can be just an email address, or the `"Name" <email@example.com>` format
-;FROM =
-;;
-;; Sometimes it is helpful to use a different address on the envelope. Set this to use ENVELOPE_FROM as the from on the envelope. Set to `<>` to send an empty address.
-;ENVELOPE_FROM =
-;;
-;; Mailer user name and password, if required by provider.
-;USER =
-;;
-;; Use PASSWD = `your password` for quoting if you use special characters in the password.
-;PASSWD =
-;;
-;; Send mails only in plain text, without HTML alternative
-;SEND_AS_PLAIN_TEXT = false
-;;
-;; Specify an alternative sendmail binary
-;SENDMAIL_PATH = sendmail
-;;
-;; Specify any extra sendmail arguments
-;; WARNING: if your sendmail program interprets options you should set this to "--" or terminate these args with "--"
-;SENDMAIL_ARGS =
-;;
-;; Timeout for Sendmail
-;SENDMAIL_TIMEOUT = 5m
-;;
-;; convert \r\n to \n for Sendmail
-;SENDMAIL_CONVERT_CRLF = true
+  {% if forgejo_mailer.protocol | default('') | string | length > 0 and
+        forgejo_mailer.protocol in ["smtp", "smtps", "smtp+starttls", "smtp+unix", "sendmail", "dummy"] %}
+PROTOCOL = {{ forgejo_mailer.protocol }}
+  {% endif %}
+  {% if forgejo_mailer.smtp_addr | default('') | string | length > 0 %}
+SMTP_ADDR = {{ forgejo_mailer.smtp_addr }}
+  {% endif %}
+  {% if forgejo_mailer.smtp_port | default('') | string | length > 0 %}
+SMTP_PORT = {{ forgejo_mailer.smtp_port }}
+  {% endif %}
+  {% if forgejo_mailer.enable_helo | default('') | string | length > 0 %}
+ENABLE_HELO = {{ forgejo_mailer.enable_helo | bodsch.core.config_bool(true_as='true', false_as='false') }}
+  {% endif %}
+  {% if forgejo_mailer.helo_hostname | default('') | string | length > 0 %}
+HELO_HOSTNAME = {{ forgejo_mailer.helo_hostname }}
+  {% endif %}
+  {% if forgejo_mailer.force_trust_server_cert | default('') | string | length > 0 %}
+FORCE_TRUST_SERVER_CERT = {{ forgejo_mailer.force_trust_server_cert | bodsch.core.config_bool(true_as='true', false_as='false') }}
+  {% endif %}
+  {% if forgejo_mailer.use_client_cert | default('') | string | length > 0 %}
+USE_CLIENT_CERT = {{ forgejo_mailer.use_client_cert | bodsch.core.config_bool(true_as='true', false_as='false') }}
+  {% endif %}
+  {% if forgejo_mailer.client_cert_file | default('') | string | length > 0 %}
+CLIENT_CERT_FILE = {{ forgejo_mailer.client_cert_file }}
+  {% endif %}
+  {% if forgejo_mailer.client_key_file | default('') | string | length > 0 %}
+CLIENT_KEY_FILE = {{ forgejo_mailer.client_key_file }}
+  {% endif %}
+  {% if forgejo_mailer.from | default('') | string | length > 0 %}
+FROM = {{ forgejo_mailer.from }}
+  {% endif %}
+  {% if forgejo_mailer.envelop_from | default('') | string | length > 0 %}
+ENVELOPE_FROM = {{ forgejo_mailer.envelop_from }}
+  {% endif %}
+  {% if forgejo_mailer.user | default('') | string | length > 0 %}
+USER = {{ forgejo_mailer.user }}
+  {% endif %}
+  {% if forgejo_mailer.passwd | default('') | string | length > 0 %}
+PASSWD = {{ forgejo_mailer.passwd }}
+  {% endif %}
+  {% if forgejo_mailer.send_as_plain_text | default('') | string | length > 0 %}
+SEND_AS_PLAIN_TEXT = {{ forgejo_mailer.send_as_plain_text | bodsch.core.config_bool(true_as='true', false_as='false') }}
+  {% endif %}
+  {% if forgejo_mailer.sendmail_path | default('') | string | length > 0 %}
+SENDMAIL_PATH = {{ forgejo_mailer.sendmail_path }}
+  {% endif %}
+  {% if forgejo_mailer.sendmail_args | default('') | string | length > 0 %}
+SENDMAIL_ARGS = {{ forgejo_mailer.sendmail_args }}
+  {% endif %}
+  {% if forgejo_mailer.sendmail_timeout | default('') | string | length > 0 %}
+SENDMAIL_TIMEOUT = {{ forgejo_mailer.sendmail_timeout }}
+  {% endif %}
+  {% if forgejo_mailer.sendmail_convert_crlf | default('') | string | length > 0 %}
+SENDMAIL_CONVERT_CRLF = {{ forgejo_mailer.sendmail_convert_crlf | bodsch.core.config_bool(true_as='true', false_as='false') }}
+  {% endif %}

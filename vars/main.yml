@@ -367,8 +367,15 @@ forgejo_defaults_indexer:
   max_file_size: ""                               # 1048576
 
 forgejo_defaults_lfs:
-  storage_type: ""                                # local
+  storage_type: "local"                           # local, minio
   path: ""                                        # data/lfs
+
+  minio_base_path: ""
+  minio_endpoint: ""
+  minio_access_key_id: ""
+  minio_secret_access_key: ""
+  minio_bucket: ""
+  minio_location: ""
 
 forgejo_defaults_log:
   root_path: ""

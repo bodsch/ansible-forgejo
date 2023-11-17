@@ -3,8 +3,8 @@
 
 Ansible role to install and configure [forgejo](https://forgejo.org/) on various linux systems.
 
-Forgejo is a self-hosted lightweight software forge.  
-Easy to install and low maintenance, it just does the job. 
+Forgejo is a self-hosted lightweight software forge.
+Easy to install and low maintenance, it just does the job.
 
 
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/bodsch/ansible-forgejo/main.yml?branch=main)][ci]
@@ -527,8 +527,16 @@ forgejo_indexer:
   max_file_size: 1048576
 
 forgejo_lfs:
+  # storage type, currently supported: local, minio
   storage_type: local
   path: data/lfs
+
+  minio_base_path: ""
+  minio_endpoint: ""
+  minio_access_key_id: ""
+  minio_secret_access_key: ""
+  minio_bucket: ""
+  minio_location: ""
 
 forgejo_log:
   root_path: ""
@@ -1431,7 +1439,7 @@ forgejo_auths:
     bind_dn: ""                                   # The DN to bind to the LDAP server with when searching for the user.
     bind_password: ""                             # The password for the Bind DN, if any.
     attributes_in_bind: ""                        # Fetch attributes in bind DN context.
-    synchronize_users: ""                         # Enable/ Disable user synchronization.  
+    synchronize_users: ""                         # Enable/ Disable user synchronization.
 
 ```
 
