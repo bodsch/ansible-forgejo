@@ -1321,15 +1321,6 @@ forgejo_storage:
     storage_type: local
   packages:
     storage_type: local
-  my_minio:
-    storage_type: minio
-    minio_endpoint: localhost:9000
-    minio_access_key_id: ""
-    minio_secret_access_key: ""
-    minio_bucket: forgejo
-    minio_location: us-east-1
-    minio_use_ssl: false
-    minio_insecure_skip_verify: false
   actions_log:
     storage_type: local
 
