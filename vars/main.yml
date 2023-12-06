@@ -367,8 +367,15 @@ forgejo_defaults_indexer:
   max_file_size: ""                               # 1048576
 
 forgejo_defaults_lfs:
-  storage_type: ""                                # local
+  storage_type: "local"                           # local, minio
   path: ""                                        # data/lfs
+
+  minio_base_path: ""
+  minio_endpoint: ""
+  minio_access_key_id: ""
+  minio_secret_access_key: ""
+  minio_bucket: ""
+  minio_location: ""
 
 forgejo_defaults_log:
   root_path: ""
@@ -835,20 +842,20 @@ forgejo_defaults_ssh:
     # dsa: -1
 
 forgejo_defaults_storage:
-  storage_type: ""                                # local
+  storage_type: ""                                # local, minio
+  path: ""
+  serve_direct: ""                              # false
+  minio_endpoint: ""                            # localhost:9000
+  minio_access_key_id: ""
+  minio_secret_access_key: ""
+  minio_bucket: ""                              # forgejo
+  minio_location: ""                            # us-east-1
+  minio_use_ssl: ""                             # false
+  minio_insecure_skip_verify: ""                # false
   repo_-archive:
     storage_type: ""                              # local
   packages:
     storage_type: ""                              # local
-  my_minio:
-    storage_type: ""                              # minio
-    minio_endpoint: ""                            # localhost:9000
-    minio_access_key_id: ""
-    minio_secret_access_key: ""
-    minio_bucket: ""                              # forgejo
-    minio_location: ""                            # us-east-1
-    minio_use_ssl: ""                             # false
-    minio_insecure_skip_verify: ""                # false
   actions_log:
     storage_type: ""                              # local
 
