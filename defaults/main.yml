@@ -33,10 +33,13 @@ forgejo_actions: {}
 forgejo_admin: {}
 forgejo_api: {}
 forgejo_attachment: {}
+forgejo_auths:
+  ldap: {}
 forgejo_cache: {}
 forgejo_camo: {}
 forgejo_cron: {}
 forgejo_database: {}
+forgejo_email: {}
 forgejo_federation: {}
 forgejo_git: {}
 forgejo_highlight: {}
@@ -69,7 +72,6 @@ forgejo_task: {}
 forgejo_time: {}
 forgejo_ui: {}
 forgejo_webhook: {}
-forgejo_auths:
-  ldap: {}
+
 
 ...

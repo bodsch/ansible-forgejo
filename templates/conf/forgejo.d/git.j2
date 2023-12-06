@@ -44,6 +44,7 @@ DISABLE_PARTIAL_CLONE = {{  forgejo_git.disable_partial_clone | bodsch.core.conf
   {% endif %}
   {% if forgejo_git.timeout is defined and
         forgejo_git.timeout | count > 0 %}
+
 [git.timeout]
     {% if forgejo_git.timeout.default | default('') | string | length > 0 %}
 DEFAULT = {{ forgejo_git.timeout.default }}
@@ -67,6 +68,7 @@ GC = {{ forgejo_git.timeout.gc }}
   {% if forgejo_git.reflog is defined and
         forgejo_git.reflog | count > 0 and
         forgejo_git.reflog.enabled | default('false') | bool %}
+
 [git.reflog]
 ENABLED = {{ forgejo_git.reflog.enabled | bodsch.core.config_bool(true_as='true', false_as='false') }}
     {% if forgejo_git.reflog.expiration | default('') | string | length > 0 %}

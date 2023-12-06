@@ -47,5 +47,8 @@
   when:
     - forgejo_auths.ldap is defined
     - forgejo_auths.ldap | count > 0
+    - forgejo_auths.ldap.state is defined
+    - forgejo_auths.ldap.state | string | length > 0
+    - forgejo_auths.ldap.state is in ["present", "absent"]
 
 ...
