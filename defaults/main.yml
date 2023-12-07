@@ -45,6 +45,7 @@ forgejo_git: {}
 forgejo_highlight: {}
 forgejo_i18n: {}
 forgejo_indexer: {}
+forgejo_lfs: {}
 forgejo_log: {}
 forgejo_mailer: {}
 forgejo_markdown: {}
