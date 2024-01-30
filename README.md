@@ -1,6 +1,15 @@
 
 # Ansible Role:  `forgejo`
 
+---
+
+> I have transferred this role to its own [collection](https://github.com/bodsch/ansible-collection-scm).  
+> In future, I will not accept or process any further pull requests or issues here.
+>
+> **Please use the linked collection from now on!**
+
+---
+
 Ansible role to install and configure [forgejo](https://forgejo.org/) on various linux systems.
 
 Forgejo is a self-hosted lightweight software forge.
